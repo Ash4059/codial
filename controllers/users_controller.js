@@ -10,7 +10,7 @@ module.exports.users = function(req,res){
 module.exports.signIn = function(req,res){
     if(req.isAuthenticated())
     {
-        return res.redirect('/users/profile');
+        return res.redirect('/');
     }
     return res.render('user_sign_in',{
         title: "user Sign in"
@@ -21,7 +21,7 @@ module.exports.signIn = function(req,res){
 module.exports.signUp = function(req,res){
     if(req.isAuthenticated())
     {
-        return res.redirect('/users/profile');
+        return res.redirect('/');
     }
     return res.render('user_sign_up',{
         title: "User Sign up"
