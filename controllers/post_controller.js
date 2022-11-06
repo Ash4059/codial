@@ -14,12 +14,9 @@ module.exports.create = function(req,res){
     })
 }
 
-module.exports.destroy = function(req,res){
-    Post.findById(req.params.id,function(err,post){
-        if(err){
-            console.log("Error while deleting posts");
-            return;
-        }
+module.exports.destroy = async function(req,res){
+    try {
+        const post = await Post.findById(req.params.id);
         // .id means converting the objects into string id
         if(post.user == req.user.id){
             post.remove();
@@ -32,5 +29,7 @@ module.exports.destroy = function(req,res){
         {
             return res.redirect('back');
         }
-    })
+    } catch (error) {
+        console.log("Error ",error);
+    }
 }

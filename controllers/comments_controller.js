@@ -2,8 +2,9 @@ const Comments = require('../models/comments');
 
 const Post = require('../models/posts');
 
-module.exports.create = function(req,res){
-    Post.findById(req.body.post,function(err,post){
+module.exports.create = async function(req,res){
+    try{
+        const post = await Post.findById(req.body.post)
         if(post){
             Comments.create({
                 content: req.body.content,
@@ -19,15 +20,15 @@ module.exports.create = function(req,res){
                 return res.redirect('/');
             })
         }
-    })
+    }catch(err){
+        console.log("Error ", err);
+    }
 }
 
-module.exports.destroy = function(req,res){
-    Comments.findById(req.params.id, function(err,comment){
-        if(err){
-            console.log("Error while deleting comments");
-            return res.redirect('back');
-        }
+module.exports.destroy = async function(req,res){
+    try{
+        const comment = await Comments.findById(req.params.id);
+    
         if(req.user.id == comment.user){
             Post.findByIdAndUpdate(comment.post,{ $pull: {comments:req.params.id}},function(err,post){
                 if(err){
@@ -38,5 +39,7 @@ module.exports.destroy = function(req,res){
             comment.remove();
             return res.redirect('back');
         }
-    })
+    }catch(err){
+        console.log("Error ",err);
+    }
 }
