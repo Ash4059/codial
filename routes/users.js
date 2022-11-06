@@ -4,7 +4,8 @@ const passport = require('../config/passport-local-strategy');
 
 const users_controller = require('../controllers/users_controller');
 
-router.get('/profile', passport.checkAuthentication ,users_controller.users);
+router.get('/profile/:id', passport.checkAuthentication ,users_controller.users);
+router.post('/update/:id', passport.checkAuthentication, users_controller.update);
 
 router.get('/sign-up',users_controller.signUp);
 

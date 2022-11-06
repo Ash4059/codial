@@ -1,9 +1,12 @@
 const User = require('../models/users');
 
 module.exports.users = function(req,res){
-    return res.render('user_profile',{
-        title: "user profile"
-    });
+    User.findById(req.params.id,function(err,user){
+        return res.render('user_profile',{
+            title: "user profile",
+            user_profile: user
+        });
+    })
 }
 
 // Render sign in pages
@@ -61,15 +64,29 @@ module.exports.create = function(req,res){
 
 // Get the signin data
 module.exports.createSession = function(req,res){
-    return res.redirect('/users/profile');
+    return res.redirect('/');
 }
 
 module.exports.destroySession = function(req,res){
     req.logout(function(err){
         if(err){
             console.log("Error while destroying session");
-            return res.redirect('/users/profile');
+            return res.redirect('/');
         }
     });
     return res.redirect('/');
+}
+
+module.exports.update = function(req,res){
+    if(req.params.id == req.user.id){
+        User.findByIdAndUpdate(req.params.id,req.body,function(err,user){
+            // console.log(user);
+            if(err){
+                console.log("Error while updating user");
+            }
+            return res.redirect('back');
+        })
+    }else{
+        return res.status(401).send('unauthorized');
+    }
 }
