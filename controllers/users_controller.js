@@ -64,6 +64,7 @@ module.exports.create = function(req,res){
 
 // Get the signin data
 module.exports.createSession = function(req,res){
+    req.flash('success','Logged in SuccessFully');
     return res.redirect('/');
 }
 
@@ -74,6 +75,7 @@ module.exports.destroySession = function(req,res){
             return res.redirect('/');
         }
     });
+    req.flash('success','Logged out SuccessFully');
     return res.redirect('/');
 }
 
