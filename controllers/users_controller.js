@@ -69,13 +69,14 @@ module.exports.createSession = function(req,res){
 }
 
 module.exports.destroySession = function(req,res){
+    req.flash('success','Logged out SuccessFully');
     req.logout(function(err){
         if(err){
             console.log("Error while destroying session");
             return res.redirect('/');
         }
     });
-    req.flash('success','Logged out SuccessFully');
+    console.log("Logged out");
     return res.redirect('/');
 }
 
