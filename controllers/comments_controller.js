@@ -6,19 +6,22 @@ module.exports.create = async function(req,res){
     try{
         const post = await Post.findById(req.body.post)
         if(post){
-            Comments.create({
+            let comment = await Comments.create({
                 content: req.body.content,
                 user: req.user._id,
                 post: req.body.post
-            }, function(err,comment){
-                if(err){
-                    console.log("Error while inserting comments in database");
-                    return res.redirect('back');
-                }
-                post.comments.push(comment);
-                post.save();
-                return res.redirect('/');
             })
+            post.comments.push(comment);
+            post.save();
+            if(req.xhr){
+                return res.status(200).json({
+                    data:{
+                        comment: comment
+                    },
+                    message: "Comments added successfully"
+                });
+            }
+            return res.redirect('/');
         }
     }catch(err){
         console.log("Error ", err);

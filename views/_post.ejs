@@ -9,7 +9,7 @@
     </p>
     <div class="posts-comments">
         <% if(locals.user){ %>
-            <form action="/comments/create" method="post">
+            <form action="/comments/create" class="new-comment-form" method="post">
                 <input type="text" name="content" placeholder="Type here to add comments...." required>
                 <input type="hidden" name="post" value="<%= post._id %>">
                 <input type="submit" value="Add comments">
@@ -18,18 +18,10 @@
         <div class="post-comment-list">
             <ul id="post-comments-<%= post.id %>">
                 <% for (comment of post.comments){ %>
-                    <li>
-                        <p>
-                            <%= comment.content %>
-                            <% if(locals.user && locals.user._id == comment.user.id){ %>
-                                <small><a href="/comments/destroy/<%= comment.id %>">Delete</a></small>
-                            <% } %>
-                            <br>
-                            <small><%= comment.user.name %></small>
-                        </p>
-                    </li>
+                    <%- include('_comments') -%> 
                 <% } %>
             </ul>
         </div>
     </div>
 </li>
+<script src="/js/home_comment.js"></script>
