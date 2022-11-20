@@ -1,4 +1,6 @@
 const User = require('../models/users');
+const fs = require('fs');
+const path = require('path');
 
 module.exports.users = function(req,res){
     User.findById(req.params.id,function(err,user){
@@ -79,16 +81,32 @@ module.exports.destroySession = function(req,res){
     });
 }
 
-module.exports.update = function(req,res){
+module.exports.update = async function(req,res){
     if(req.params.id == req.user.id){
-        User.findByIdAndUpdate(req.params.id,req.body,function(err,user){
-            // console.log(user);
-            if(err){
-                console.log("Error while updating user");
-            }
+        try {
+            let user = await User.findByIdAndUpdate(req.params.id,req.body);
+            User.uploadedAvatar(req,res,function(error){
+                if(error){
+                    console.log('**********Multer Error***********');
+                }
+                user.name = req.body.name;
+                user.email = req.body.email;
+                if(req.file){
+                    if(user.avatar){
+                        fs.unlinkSync(path.join(__dirname,'..',user.avatar));
+                    }
+                    // This is saving the path of the uploaded file into avatar field in the user
+                    user.avatar = User.avatarPath + '/' + req.file.filename;
+                }
+                user.save();
+                return res.redirect('back');
+            });
+        } catch (error) {
+            req.flash('error','Error while updating user');
             return res.redirect('back');
-        })
+        }
     }else{
+        req.flash('error','unauthorized');
         return res.status(401).send('unauthorized');
     }
 }

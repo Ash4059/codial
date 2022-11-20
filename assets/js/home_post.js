@@ -12,7 +12,21 @@
                 success: function(data){
                     let newPost = newPostDom(data.data.post);
                     $('#post-list-container>ul').prepend(newPost);
+                    
+                    // To delete the post
                     deletePost($(' .delete-post-button', newPost));
+
+                    // Call the create comment class
+                    new PostComments(data.data.post._id);
+
+                    new Noty
+                    ({
+                        theme: 'relax',
+                        text: 'Post published',
+                        type: 'success',
+                        layout: 'topRight',
+                        timeout: 1500
+                    }).show();
                 },error: function(err){
                     console.log(err.responseText);
                 }
@@ -30,7 +44,7 @@
                         ${ post.user.name }
                     </p>
                     <div class="posts-comments">
-                        <form action="/comments/create" method="post">
+                        <form action="/comments/create" method="post" id="post-${post._id}-comments-form">
                             <input type="text" name="content" placeholder="Type here to add comments...." required>
                             <input type="hidden" name="post" value="${ post._id }">
                             <input type="submit" value="Add comments">
