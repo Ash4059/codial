@@ -8,14 +8,14 @@ class PostComments{
         this.createComment(postId);
     }
     createComment = function(postId){
-        // console.log(newCommentForm);
+        console.log(this.newCommentForm.serialize());
         // Method to submit form using ajax
         this.newCommentForm.submit(function(event){
             event.preventDefault();
             $.ajax({
                 type: "post",
                 url: "/comments/create",
-                data: commentForm.serialize(),
+                data: this.newCommentForm.serialize(),
                 success: function(data){
                     let newComment = newCommentDOM(data.data.comment);
                     $(`#post-comments-${postId}`).prepend(newComment);

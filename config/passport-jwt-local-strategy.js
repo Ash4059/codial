@@ -10,9 +10,9 @@ const opts = {
 };
 
 passport.use(new JWTStrategy(opts,function(jwtPayload, done){
-    User.findById(jwtPayload._id,function(user,err){
+    User.findById(jwtPayload._id,function(err,user){
         if(err){
-            console.log("Error while finding uswer from jwt token");
+            console.log("Error while finding user from jwt token");
             return;
         }
         if(user){
