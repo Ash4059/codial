@@ -3,14 +3,15 @@ class PostComments{
     constructor(postId){
         this.postId = postId;
         this.postContainer = $(`#post-${postId}`);
-        this.newCommentForm = $(`#post-${postId}-comments-form`);
-
+        this.newCommentForm = $(`#post-${postId}-comments-form`)[0];
+        // console.log(this.newCommentForm,"const");
         this.createComment(postId);
     }
     createComment = function(postId){
-        console.log(this.newCommentForm.serialize());
+        
         // Method to submit form using ajax
         this.newCommentForm.submit(function(event){
+            console.log(this.newCommentForm);
             event.preventDefault();
             $.ajax({
                 type: "post",
