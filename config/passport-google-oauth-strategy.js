@@ -16,7 +16,7 @@ passport.use(new googleStrategy({
                 console.log("Error in google strategy passport",error);
                 return;
             }
-            console.log(profile);
+            // console.log(profile);
             if(user){
                 // If user found then return user
                 return done(null, user);
