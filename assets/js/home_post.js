@@ -17,7 +17,7 @@
                     deletePost($(' .delete-post-button', newPost));
 
                     // Call the create comment class
-                    new PostComments(data.data.post._id);
+                    new PostComment(data.data.post._id);
 
                     new Noty
                     ({
@@ -50,7 +50,7 @@
                             <input type="submit" value="Add comments">
                         </form>
                         <div class="post-comment-list">
-                            <ul id="post-comments-${ post.id }">
+                            <ul id="post-comments-${ post._id }">
                             </ul>
                         </div>
                     </div>

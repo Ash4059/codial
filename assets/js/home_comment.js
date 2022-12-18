@@ -1,25 +1,26 @@
-class PostComments{
+class PostComment{
     // constructor is used to initialize the instance of the class whenever a new instance is created
     constructor(postId){
         this.postId = postId;
+        // console.log(this.postId);
         this.postContainer = $(`#post-${postId}`);
-        this.newCommentForm = $(`#post-${postId}-comments-form`)[0];
-        // console.log(this.newCommentForm,"const");
+        this.newCommentForm = $(`#post-${postId}-comments-form`);
         this.createComment(postId);
     }
     createComment = function(postId){
         
+        let self = this;
         // Method to submit form using ajax
         this.newCommentForm.submit(function(event){
-            console.log(this.newCommentForm);
             event.preventDefault();
             $.ajax({
                 type: "post",
                 url: "/comments/create",
-                data: this.newCommentForm.serialize(),
+                data: self.newCommentForm.serialize(),
                 success: function(data){
-                    let newComment = newCommentDOM(data.data.comment);
-                    $(`#post-comments-${postId}`).prepend(newComment);
+                    let newComment = self.newCommentDOM(data.data.comment);
+                    let commentContainer = $(`#post-comments-${postId}`);
+                    commentContainer.prepend(newComment);
                     console.log("comment added");
                 },error: function(error){
                     console.log(error.responseText);

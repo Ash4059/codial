@@ -5,6 +5,7 @@ const Post = require('../models/posts');
 const commentMailer = require('../mailers/comments_mailer');
 module.exports.create = async function(req,res){
     try{
+        console.log("Comment called");
         const post = await Post.findById(req.body.post)
         if(post){
             let comment = await Comments.create({
