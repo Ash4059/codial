@@ -11,6 +11,7 @@
                 data: newPostForm.serialize(),
                 success: function(data){
                     let newPost = newPostDom(data.data.post);
+                    console.log(data.data.post);
                     $('#post-list-container>ul').prepend(newPost);
                     
                     // To delete the post
