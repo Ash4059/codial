@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 const likeSchema = mongoose.Schema({
     user:{
-        type: mongoose.Schema.ObjectId
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     },
     // this defines the object id of liked field
     likeable:{
