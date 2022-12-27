@@ -8,7 +8,10 @@
 }
 
 #home-container #user-friends {
+  display: flex;
   width: 30%;
   padding: 10px;
   border-left: 1px solid lightgray;
+  flex-direction: column;
+  justify-content: space-around;
 }

@@ -19,12 +19,23 @@
     </section>
     
     <section id="user-friends">
-        <h4>Friends</h4>
-        <% for(users of all_users){ %>
-            <p>
-                <a href="/users/profile/<%= users.id %>"><%= users.name %></a>
-            </p>
-        <% } %>
+        <div class="users-friend">
+            <h4>Friends</h4>
+            <% for(users of all_users){ %>
+                <p>
+                    <a href="/users/profile/<%= users.id %>"><%= users.name %></a>
+                </p>
+            <% } %>
+        </div>
+        <div class="all-users">
+            <h4>Users</h4>
+            <% for(users of all_users){ %>
+                <p>
+                    <a href="/users/profile/<%= users.id %>"><%= users.name %></a>
+                    <small><a href="/friends/toggle/<%= users.id %>">Add friend</a></small>
+                </p>
+            <% } %>
+        </div>
     </section>
 </div>
 <script src="/js/home_post.js"></script>

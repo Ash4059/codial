@@ -10,7 +10,6 @@ class ToggleLike{
         $(this.toggler).click(function(e){
             e.preventDefault();
             let self = this;
-
             // this is a new way of writing ajax which you might've studied, it looks like the same as promises
             $.ajax({
                 type: 'post',
@@ -24,8 +23,6 @@ class ToggleLike{
                 }else{
                     likesCount += 1;
                 }
-
-
                 $(self).attr('data-likes', likesCount);
                 $(self).html(`${likesCount} Likes`);
 
@@ -33,8 +30,6 @@ class ToggleLike{
             .fail(function(errData) {
                 console.log('error in completing the request');
             });
-            
-
         });
     }
 }
