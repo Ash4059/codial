@@ -20,10 +20,10 @@
     </section>
     
     <section id="user-friends">
-        <div class="users-friend">
+        <div class="users-friends">
             <h4>Friends</h4>
             <% for(friend of userFriends){ %>
-                <p>
+                <p id="users-friend-<%= friend.id %>">
                     <a href="/users/profile/<%= friend.id %>"><%= friend.name %></a>
                 </p>
             <% } %>
@@ -32,8 +32,10 @@
             <h4>Users</h4>
             <% for(users of all_users){ %>
                 <p>
+                    <% let isFriend = false; %>
+                    <% userFriends.forEach(elm => {if(elm.id === users.id) isFriend = true;}) %>
                     <a href="/users/profile/<%= users.id %>"><%= users.name %></a>
-                    <% if(userFriends.includes(users)){ %>
+                    <% if(isFriend){ %>
                         <small><a class="toggle-friends-button" href="/friends/toggle/<%= users.id %>">remove friend</a></small>
                     <% }else{ %>
                         <small><a class="toggle-friends-button" href="/friends/toggle/<%= users.id %>">Add friend</a></small>

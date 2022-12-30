@@ -36,7 +36,8 @@ module.exports.toggleFriends = async function(req,res){
         return res.status(200).json({
             message: "Request successfull",
             data: {
-                isFriend: friendStatus
+                isFriend: friendStatus,
+                friend: reciever
             }
         })
     } catch (error) {

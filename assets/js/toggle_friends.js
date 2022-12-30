@@ -7,6 +7,7 @@ class ToggleFriend{
 
 
     toggleFriends(){
+        const pSelf = this;
         $(this.toggler).click(function(e){
             e.preventDefault();
             const self = this;
@@ -18,9 +19,10 @@ class ToggleFriend{
                 let friendStatus;
                 if (data.data.isFriend){
                     friendStatus = "remove";
-                    
+                    $(".users-friends").append(pSelf.newFriendDom(data.data.friend));
                 }else{
                     friendStatus = "add";
+                    $(`#users-friend-${data.data.friend.id}`).remove();
                 }
                 $(self).html(`${friendStatus} friends`);
 
@@ -30,4 +32,12 @@ class ToggleFriend{
             });
         });
     }
+
+    newFriendDom = function(friendData){
+        return `
+            <p id="users-friend-${friendData.id}">
+                <a href="/users/profile/${friendData.id}">${friendData.name}</a>
+            </p>`
+    }
+
 }
