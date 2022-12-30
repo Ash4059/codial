@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="/css/home.css">
+<link rel="stylesheet" href="/css/chat_box.css">
 
 <div id="home-container">
     <section id="feed-posts">
@@ -21,9 +22,9 @@
     <section id="user-friends">
         <div class="users-friend">
             <h4>Friends</h4>
-            <% for(users of all_users){ %>
+            <% for(friend of userFriends){ %>
                 <p>
-                    <a href="/users/profile/<%= users.id %>"><%= users.name %></a>
+                    <a href="/users/profile/<%= friend.id %>"><%= friend.name %></a>
                 </p>
             <% } %>
         </div>
@@ -32,7 +33,11 @@
             <% for(users of all_users){ %>
                 <p>
                     <a href="/users/profile/<%= users.id %>"><%= users.name %></a>
-                    <small><a href="/friends/toggle/<%= users.id %>">Add friend</a></small>
+                    <% if(userFriends.includes(users)){ %>
+                        <small><a class="toggle-friends-button" href="/friends/toggle/<%= users.id %>">remove friend</a></small>
+                    <% }else{ %>
+                        <small><a class="toggle-friends-button" href="/friends/toggle/<%= users.id %>">Add friend</a></small>
+                    <% } %>
                 </p>
             <% } %>
         </div>
@@ -48,4 +53,12 @@
         let self = this;
         let toggleLike = new ToggleLike(self);
     });
+</script>
+
+<script src="js/toggle_friends.js"></script>
+<script>
+    $('.toggle-friends-button').each(function(){
+        let self = this;
+        let toggleFriends = new ToggleFriend(self);
+    })
 </script>
