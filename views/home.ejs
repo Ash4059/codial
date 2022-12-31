@@ -35,15 +35,18 @@
                     <% let isFriend = false; %>
                     <% userFriends.forEach(elm => {if(elm.id === users.id) isFriend = true;}) %>
                     <a href="/users/profile/<%= users.id %>"><%= users.name %></a>
-                    <% if(isFriend){ %>
-                        <small><a class="toggle-friends-button" href="/friends/toggle/<%= users.id %>">remove friend</a></small>
-                    <% }else{ %>
-                        <small><a class="toggle-friends-button" href="/friends/toggle/<%= users.id %>">Add friend</a></small>
+                    <% if(locals.user) {%>
+                        <% if(isFriend){ %>
+                            <small><a class="toggle-friends-button" href="/friends/toggle/<%= users.id %>">remove friend</a></small>
+                        <% }else{ %>
+                            <small><a class="toggle-friends-button" href="/friends/toggle/<%= users.id %>">Add friend</a></small>
+                        <% } %>
                     <% } %>
                 </p>
             <% } %>
         </div>
     </section>
+    <%- include("_chatbox") -%>
 </div>
 <script src="/js/home_post.js"></script>
 <script src="/js/home_comment.js"></script>

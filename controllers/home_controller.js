@@ -25,7 +25,10 @@ module.exports.home = async function(req,res){
             user = await User.findById(req.user._id)
             .populate('freindships');
             for(let friend of user.freindships){
-                const userFriend = await User.findById(friend.to_user);
+                let userFriend;
+                userFriend = await User.findById(friend.from_user);
+                if(userFriend.id === req.user.id)
+                    userFriend = await User.findById(friend.to_user);
                 userFriends.push(userFriend);
             }
         }
