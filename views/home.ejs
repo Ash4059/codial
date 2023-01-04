@@ -1,5 +1,5 @@
-<link rel="stylesheet" href="/css/home.css">
-<link rel="stylesheet" href="/css/chat_box.css">
+<link rel="stylesheet" href="./css/home.css">
+<link rel="stylesheet" href="./css/chat_box.css">
 
 <div id="home-container">
     <section id="feed-posts">
@@ -35,7 +35,7 @@
                     <% let isFriend = false; %>
                     <% userFriends.forEach(elm => {if(elm.id === users.id) isFriend = true;}) %>
                     <a href="/users/profile/<%= users.id %>"><%= users.name %></a>
-                    <% if(locals.user) {%>
+                    <% if(locals.user && locals.user.id !== users.id) {%>
                         <% if(isFriend){ %>
                             <small><a class="toggle-friends-button" href="/friends/toggle/<%= users.id %>">remove friend</a></small>
                         <% }else{ %>
